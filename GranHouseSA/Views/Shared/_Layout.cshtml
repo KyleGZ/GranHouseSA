@@ -1,0 +1,227 @@
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Beach.SA</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+    <style>
+        :root {
+            --bs-primary: #0c193b;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .custom-navbar {
+            background-color: var(--bs-primary);
+        }
+
+        .navbar-brand img {
+            height: 100px;
+            width: auto;
+        }
+
+        .nav-link-custom, .btn-logout {
+            color: #fff3d1 !important;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.3s ease, transform 0.3s ease;
+            background: none;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-logout {
+            color: #fff3d1 !important;
+        }
+
+        .btn-logout:hover {
+                color: #0c193b !important;
+        }
+
+        .nav-link-custom:hover {
+            color: #fff3d1 !important;
+            transform: translateY(-2px);
+        }
+
+        .custom-footer {
+            background-color: #0c193b;
+            color: #fff3d1;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .navbar-toggler {
+            width: 3rem;
+            height: 3rem;
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.9%29' stroke-linecap='round' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img src="~/Imagenes/Beach_Logo_minimizado.jpg" alt="Beach.SA">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+      
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+                            if (User.IsInRole("C"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white hoverable" asp-area="" asp-controller="Clientes" asp-action="Create">Registrarse</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white hoverable" asp-area="" asp-controller="Compras" asp-action="Reservar">Reservar</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white hoverable" asp-area="" asp-controller="Paquetes" asp-action="VistaPaquetes">Paquetes disponibles</a>
+                                </li>
+                            }
+
+                            if (User.IsInRole("M"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white hoverable" asp-area="" asp-controller="Clientes" asp-action="Create">Registrar cliente</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white hoverable" asp-area="" asp-controller="Compras" asp-action="Reservar">Reservar</a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Administración
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Reservacion" asp-action="Index">Reservaciones</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Compras" asp-action="Index">Compras</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Paquetes" asp-action="Index">Paquetes</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+
+                            if (User.IsInRole("A"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white hoverable" asp-area="" asp-controller="Clientes" asp-action="Create">Registrar cliente</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white hoverable" asp-area="" asp-controller="Compras" asp-action="Reservar">Reservar</a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Administración
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Reservacion" asp-action="Index">Reservaciones</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Compras" asp-action="Index">Compras</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Paquetes" asp-action="Index">Paquetes</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark hoverable" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                            
+                        }
+                    </ul>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var email = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item me-3">
+                                <a class="nav-link text-white">Welcome: @User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                <form method="post" asp-controller="Usuarios" asp-action="Logout">
+                                    <button type="submit" id="BotonCerrar" class="dropdown-item btn-logout">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-custom" id="BotonCerrar" asp-area="" asp-controller="Usuarios" asp-action="Login">Iniciar sesión</a>
+                            </li>
+                        </ul>
+                    }
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - BeachS.A
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

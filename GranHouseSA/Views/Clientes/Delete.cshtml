@@ -1,0 +1,89 @@
+﻿@model GranHouseSA.Models.Clientes
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .delete-container {
+        max-width: 600px;
+        margin: 5rem auto;
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #0c193b;
+    }
+
+    .form-group label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        max-width: 400px;
+        border-radius: 8px;
+        padding: 0.6rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        border-radius: 8px;
+        padding: 0.6rem;
+        font-weight: bold;
+        background-color: #0c193b;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #1f2a50;
+        }
+
+    .alert {
+        font-size: 0.95rem;
+    }
+
+    .titulo {
+        text-align: center;
+    }
+</style>
+
+<div class="delete-container mt-5">
+    <div class="card shadow p-4">
+        <h1 class="text-center mb-3">Eliminar</h1>
+
+        <h4 class="text-center mb-4">¿Está seguro que desea hacer esto?</h4>
+
+        <h5 class="titulo">Información del cliente</h5>
+        <dl class="row mb-4">
+            <dt class="col-sm-3 fw-bold"> @Html.DisplayNameFor(model => model.Cedula) </dt>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Cedula) </dd>
+
+            <dt class="col-sm-3 fw-bold"> @Html.DisplayNameFor(model => model.TipoCedula) </dt>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.TipoCedula) </dd>
+
+            <dt class="col-sm-3 fw-bold"> @Html.DisplayNameFor(model => model.Nombre) </dt>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Nombre) </dd>
+
+            <dt class="col-sm-3 fw-bold"> @Html.DisplayNameFor(model => model.Telefono) </dt>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Telefono) </dd>
+
+            <dt class="col-sm-3 fw-bold"> @Html.DisplayNameFor(model => model.Direccion) </dt>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Direccion) </dd>
+
+            <dt class="col-sm-3 fw-bold"> @Html.DisplayNameFor(model => model.Email) </dt>
+            <dd class="col-sm-9"> @Html.DisplayFor(model => model.Email) </dd>
+        </dl>
+
+        <form asp-action="Delete" class="d-flex justify-content-center gap-3">
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-warning">Volver</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,212 @@
+﻿@model GranHouseSA.Models.Compras
+
+@{
+    ViewData["Title"] = "Reservar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f5f7fa;
+        font-family: 'Segoe UI', sans-serif;
+        color: #0c193b;
+    }
+
+    h4 {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 2rem;
+    }
+
+    .form-card {
+        background: #fff;
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        display: flow;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        width: 250px;
+    }
+
+    .form-group2 {
+        margin-bottom: 20px;
+        width: 50px;
+    }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+    .form-control {
+        border-radius: 6px;
+        box-shadow: none;
+    }
+
+    .btn-primary {
+        background-color: #2e7d32;
+        border-color: #2e7d32;
+        color: white;
+        display: block;
+        margin: 0 auto;
+        padding: 0.6rem 2rem;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+
+        .btn-primary:hover {
+            background-color: #1b5e20;
+            border-color: #1b5e20;
+        }
+
+    .alert-danger {
+        margin-top: 1rem;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+    }
+
+    a {
+        color: #0c193b;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
+
+
+<div class="form-card">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h4 class="CentrarColumnas">Reservación</h4>
+            <hr />
+            <form asp-action="Reservar" class="form-container" onsubmit="return validarSeleccion(); desactivarCheckboxes()" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="IDPaquete" class="control-label">Paquetes</label>
+                    <select asp-for="IDPaquete" class="form-select">
+                        @{
+                            GranHouseSA.Controllers.PaquetesController paquetesApi = new GranHouseSA.Controllers.PaquetesController();
+
+                            var count = paquetesApi.GetPaquetes();
+
+                            if (count.Count == 0)
+                            {
+                                <option value="00">No hay paquetes disponibles</option>
+                            }
+                        }
+                        @foreach (var paquetes in paquetesApi.GetPaquetes())
+                        {
+
+                            <option value="@paquetes.ID">@paquetes.NombrePaquete</option>
+
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cedula" class="control-label"></label>
+                    <input asp-for="Cedula" class="form-control" placeholder="X0XXX0XXX"/>
+                    <span asp-validation-for="Cedula" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CantidadNoches" class="control-label"></label>
+                    <input asp-for="CantidadNoches" class="form-control" placeholder="0" />
+                    <span asp-validation-for="CantidadNoches" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="FechaIngreso" class="control-label">Fecha entrada</label>
+                            <input asp-for="FechaIngreso" class="form-control" />
+                            <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <label class="control-label me-1" style="display : inline">Método de pago:<br></label>
+                    <input name="Efectivo" type="checkbox" id="efectivo" onclick="mostrarCampos(this)" style="display : inline" /> <label class="control-label" style="display : inline">Efectivo</label><br>
+                    <input name="Tarjeta" id="tarjeta" type="checkbox" onclick="mostrarCampos(this)" style="display : inline" /> <label class="control-label" style="display : inline">Tarjeta</label><br>
+                    <input name="Cheque" id="cheque" type="checkbox" onclick="mostrarCampos(this)" style="display : inline" /> <label class="control-label" style="display : inline">Cheque</label>
+                </div>
+
+                @if (TempData["camposVacios"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show mt-2" style="font-size:13px; margin:auto" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                        <strong>@TempData["camposVacios"]</strong>
+                    </div>
+                }
+
+                <div class="card" id="camposTarjeta" style="width: 300px; display: none;">
+                    <div class="card-header">
+                        <h5>Información de la tarjeta</h5>
+                    </div>
+                    <div class="card-body">
+                           <div class="form-group">
+                            <label for="nombreTarjeta" class="control-label">Titular de la tarjeta</label>
+                            <input type="text" id="nombreTarjeta" class="form-control" name="nombreTarjeta" for="nombreTarjeta" placeholder="Nombre Apellido" />
+                            <span validation-for="nombreTarjeta" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="numeroTarjeta" class="control-label">Número de tarjeta</label>
+                            <input type="text" id="numeroTarjeta" class="form-control" name="numeroTarjeta" for="numeroTarjeta" placeholder="XXXXXXXXXXXXXX" maxlength="16" />
+                            <span validation-for="numeroTarjeta" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="CVC" class="control-label">CVC</label>
+                            <input style="width: 100px;" type="text" id="CVC" class="form-control" name="CVC" for="CVC" placeholder="XXX" />
+                            <span validation-for="CVC" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-4" id="camposCheque" style="width: 300px; display: none;">
+                    <div class="card-header">
+                        <h5>Información del cheque</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="numeroCheque" class="control-label">Numero de cheque</label>
+                            <input type="text" id="numeroCheque" class="form-control" name="numeroCheque" for="numeroCheque" placeholder="XXXXXXXXXXXXXX" maxlength="16" />
+                            <span validation-for="numeroCheque" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Banco" class="control-label">Banco correspondiente:</label>
+                            <select for="Banco" class="form-select" name="bancoCheque">
+                                <option value="Banco de Costa Rica">Banco de Costa Rica</option>
+                                <option value="Banco Nacional">Banco Nacional</option>
+                                <option value="Banco Popular">Banco Popular</option>
+                            </select>
+                            <span validation-for="Banco" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Reservar" class="btn btn-primary"/>
+                </div>
+
+                @if (TempData["MensajeError"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show mt-2" style="font-size:13px; margin:auto" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                        <strong>@TempData["MensajeError"]</strong>
+                    </div>
+                }
+
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+

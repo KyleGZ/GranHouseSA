@@ -1,0 +1,152 @@
+﻿@model IEnumerable<GranHouseSA.Models.Clientes>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    h1 {
+        text-align: center;
+        margin-top: 2rem;
+        color: #0c193b;
+    }
+
+    .btn-create {
+        display: inline-block;
+        margin: 1rem 0;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .btn-create:hover {
+            background-color: #0056b3;
+        }
+
+    table {
+        margin: auto;
+        width: 95%;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+        .action-buttons a {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.85rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        margin-bottom: 5px;
+    }
+
+    .btn-details {
+        background-color: #17a2b8;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        margin-bottom: 5px;
+    }
+
+    .btn-edit:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-details:hover {
+        background-color: #138496;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+
+    .card{
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="CentrarColumnas">Información de los clientes</h2>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cedula)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoCedula)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefono)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Direccion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th class="CentrarColumnas">
+                        Herramientas
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cedula)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoCedula)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Direccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td class="CentrarColumnas">
+                            @Html.ActionLink("Editar", "Edit", new {  id=item.ID  }, new {@class="btn btn-warning text-white"}) 
+                            @Html.ActionLink("Eliminar", "Delete", new {  id=item.ID  }, new {@class="btn btn-danger text-white"})
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

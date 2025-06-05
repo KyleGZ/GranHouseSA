@@ -1,0 +1,52 @@
+﻿@model GranHouseSA.Models.Reservacion
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Cancelación</h1>
+
+<h3>¿Está seguro que desea hacer esto?</h3>
+<hr />
+<div>
+    <h4>Información de la reserva</h4>
+    
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IDReservacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IDReservacion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cedula)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cedula)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NombreCliente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NombreCliente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IDPaquete)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IDPaquete)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombrePaquete)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombrePaquete)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Cancelar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-warning">Volver</a>
+    </form>
+</div>

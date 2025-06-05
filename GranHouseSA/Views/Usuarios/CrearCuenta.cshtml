@@ -1,0 +1,66 @@
+﻿@model GranHouseSA.Models.Usuarios;
+
+@{
+    ViewData["Title"] = "CrearCuenta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+            <form id="FormularioLogin" asp-action="CrearCuenta" method="post">
+
+                <h1 id="Centrar">Crear una cuenta</h1>
+
+                <div class="form-group">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" placeholder="Nombre Apellido1 Apellido2" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NickName" class="form-label"></label>
+                    <input asp-for="NickName" class="form-control" placeholder="Usuario" />
+                    <span asp-validation-for="NickName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="example@domain.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="form-label"></label>
+                    <div class="input-group">
+                        <input asp-for="Password" class="form-control" placeholder="********" id="txtPassword" />
+                        <div class="input-group-append">
+                            <button id="show_password" class="btn btn-primary" type="button" onclick="mostrarPassword()"> <span class="fa fa-eye-slash icon"></span> </button>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <p class="mt-2">¿Ya tienes una cuenta? <a class="" asp-area="" asp-controller="Usuarios" asp-action="Login"> Iniciar sesión</a></p>
+
+                <div class="form-group mt-4">
+                    <button class="btn btn-outline-primary" type="submit"><i class="fa fa-user-plus icon"></i> Registrarse</button>
+                </div>
+
+                @*Diseño del formulario para crear una cuenta*@
+                @if (TempData["MensajeError"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show mt-2" style="font-size:13px; margin:auto" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                        <strong>@TempData["MensajeError"]</strong>
+                    </div>
+                }
+
+            </form>
+
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

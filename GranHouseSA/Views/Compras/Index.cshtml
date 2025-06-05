@@ -1,0 +1,186 @@
+﻿@model IEnumerable<GranHouseSA.Models.Compras>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    GranHouseSA.Data.TipoCambioApi _tipoCambio = new GranHouseSA.Data.TipoCambioApi();
+}
+
+<style>
+    h1 {
+        text-align: center;
+        margin-top: 2rem;
+        color: #0c193b;
+    }
+
+    .btn-create {
+        display: inline-block;
+        margin: 1rem 0;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .btn-create:hover {
+            background-color: #0056b3;
+        }
+
+    table {
+        margin: auto;
+        width: 95%;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+        .action-buttons a {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.85rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+    .btn-edit {
+        background-color: #ffc107;
+    }
+
+    .btn-details {
+        background-color: #17a2b8;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+    }
+
+    .btn-edit:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-details:hover {
+        background-color: #138496;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+
+    .card {
+        margin: 2rem auto;
+        padding: 2rem;
+        width: 1250px;
+        height: auto;
+    }
+</style>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="CentrarColumnas">Información de las compras</h2>
+        </div>
+    <div class="card-body" style="max-height: 600px; max-height: 600px; overflow-y: auto;">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cedula)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nombreCliente)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Transaccion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IDFactura)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.nombrePaquete)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CantidadNoches)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Prima)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Mensualidad)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Descuento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MontoFinal)
+                        </th>
+                        <th>
+                            Monto final en colones
+                        </th>
+                        <th class="CentrarColumnas">
+                            Herramientas
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var montoFinalColones = (item.MontoFinal * _tipoCambio.extraerTipoCambio().venta).ToString("0.00");
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cedula)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombreCliente)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Transaccion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IDFactura)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombrePaquete)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CantidadNoches)
+                            </td>
+                            <td>
+                                $@Html.DisplayFor(modelItem => item.Prima)
+                            </td>
+                            <td>
+                                $@Html.DisplayFor(modelItem => item.Mensualidad)
+                            </td>
+                            <td>
+                                $@Html.DisplayFor(modelItem => item.Descuento)
+                            </td>
+                            <td>
+                                $@Html.DisplayFor(modelItem => item.MontoFinal)
+                            </td>
+                            <td>
+                                ₡@montoFinalColones
+                            </td>
+                            <td class="CentrarColumnas">
+                                @Html.ActionLink("Eliminar", "Delete", new { id = item.IDFactura }, new { @class = "btn btn-danger text-white" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+

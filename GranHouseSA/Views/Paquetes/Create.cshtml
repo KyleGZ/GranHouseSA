@@ -1,0 +1,106 @@
+﻿@model GranHouseSA.Models.Paquete
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .create-container {
+        max-width: 600px;
+        margin: 5rem auto;
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #0c193b;
+    }
+
+    .form-group label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        max-width: 400px;
+        border-radius: 8px;
+        padding: 0.6rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        background-color: #0c193b;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #1f2a50;
+        }
+
+    .alert {
+        font-size: 0.95rem;
+    }
+
+    .titulo{
+        text-align: center;
+    }
+</style>
+
+
+<div class="create-container">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <h4 class="titulo">Información de los paquetes</h4>
+            <hr />
+            <form asp-action="Create" class="form-container">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="NombrePaquete" class="control-label"></label>
+                    <input asp-for="NombrePaquete" class="form-control" placeholder="Nombre del paquete"/>
+                    <span asp-validation-for="NombrePaquete" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Costo" class="control-label"></label>
+                    <input asp-for="Costo" class="form-control" type="number" placeholder="000" />
+                    <span asp-validation-for="Costo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Prima" class="control-label"></label>
+                    <input asp-for="Prima" class="form-control" type="number" step="0.01" min="0" max="100" placeholder="0.00" />
+                    <span asp-validation-for="Prima" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Mensualidad" class="control-label"></label>
+                    <input asp-for="Mensualidad" class="form-control" type="number" placeholder="00" />
+                    <span asp-validation-for="Mensualidad" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Agregar" class="btn btn-primary" /> 
+                    <input asp-action="Index" type="submit" value="Volver" class="btn btn-primary" />
+                </div>
+
+                @if (TempData["ErrorPaquete"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show mt-2" style="font-size:13px; margin:auto" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                        <strong>@TempData["ClienteError"]</strong>
+                    </div>
+                }
+
+            </form>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+</div>

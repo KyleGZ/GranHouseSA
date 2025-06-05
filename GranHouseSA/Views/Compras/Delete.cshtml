@@ -1,0 +1,97 @@
+﻿@model GranHouseSA.Models.Compras
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    GranHouseSA.Data.TipoCambioApi _tipoCambio = new GranHouseSA.Data.TipoCambioApi();
+    var montoFinalColones = (Model.MontoFinal * _tipoCambio.extraerTipoCambio().venta).ToString("0.00");
+}
+
+<h1>Eliminar</h1>
+
+<h3>¿Estás seguro que deseas hacer esto?</h3>
+<hr />
+<div>
+    <h4>Información de la compra</h4>
+    
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IDFactura)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IDFactura)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cedula)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cedula)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombreCliente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombreCliente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombrePaquete)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombrePaquete)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CantidadNoches)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CantidadNoches)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Transaccion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Transaccion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaIngreso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaIngreso)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descuento)
+        </dt>
+        <dd class = "col-sm-10">
+            $@Html.DisplayFor(model => model.Descuento)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Prima)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Prima)%
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Mensualidad)
+        </dt>
+        <dd class = "col-sm-10">
+            $@Html.DisplayFor(model => model.Mensualidad)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MontoFinal)
+        </dt>
+        <dd class="col-sm-10">
+            $@Html.DisplayFor(model => model.MontoFinal)
+        </dd>
+        <dt class="col-sm-2">
+            Monto final en colones
+        </dt>
+        <dd class="col-sm-10">
+            ₡@montoFinalColones
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-warning">Volver</a>
+    </form>
+</div>
